@@ -31,7 +31,7 @@ jobs:
           node-version: latest
 
       - run: npm ci
-      - run: CI=true npm run test
+      - run: npm run test
 
   build:
     needs: [linting, testing]
@@ -43,10 +43,9 @@ jobs:
           node-version: latest
 
       - run: npm ci
-      - run: CI=true npm run test
+      - run: npm run test
       - run: |
           docker build --build-arg REACT_APP_MOVIE_API_URL="http://a161002e464e04e39a7e327f3fc87350-796166600.us-east-1.elb.amazonaws.com" --tag=mp-frontend:latest .
-          docker run --name mp-frontend -p 3000:3000 -d mp-frontend
       
 
       
