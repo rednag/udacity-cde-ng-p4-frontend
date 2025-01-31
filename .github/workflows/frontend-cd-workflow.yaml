@@ -52,7 +52,7 @@ jobs:
       - env:
           REPO_NAME: frontend  
         run: |
-          docker build --build-arg REACT_APP_MOVIE_API_URL="a9039c49599db41549dc1dbd1cb9c9f9-742795800.us-east-1.elb.amazonaws.com"
+          docker build --build-arg REACT_APP_MOVIE_API_URL="a9039c49599db41549dc1dbd1cb9c9f9-742795800.us-east-1.elb.amazonaws.com" -t frontend .
           docker push 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::7}
 
       - run: aws eks --region us-east-1 update-kubeconfig --name cluster
