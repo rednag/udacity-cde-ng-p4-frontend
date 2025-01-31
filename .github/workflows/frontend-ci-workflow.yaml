@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: cd starter/frontend && npm ci    
-      - run: cd starter/frontend && npm run lint
+      - run: npm ci    
+      - run: npm run lint
 
   testing:
     runs-on: ubuntu-latest
@@ -30,8 +30,8 @@ jobs:
         with:
           node-version: latest
 
-      - run: cd starter/frontend && npm ci
-      - run: cd starter/frontend && CI=true npm run test
+      - run: npm ci
+      - run: CI=true npm run test
 
   build:
     needs: [linting, testing]
@@ -42,10 +42,9 @@ jobs:
         with:
           node-version: latest
 
-      - run: cd starter/frontend && npm ci
-      - run: cd starter/frontend && CI=true npm run test
+      - run: npm ci
+      - run: CI=true npm run test
       - run: |
-          cd starter/frontend
           docker build --build-arg=REACT_APP_MOVIE_API_URL="http://a161002e464e04e39a7e327f3fc87350-796166600.us-east-1.elb.amazonaws.com" --tag=mp-frontend:latest .
           docker run --name mp-frontend -p 3000:3000 -d mp-frontend
       
