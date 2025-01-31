@@ -53,7 +53,8 @@ jobs:
           REPO_NAME: frontend  
         run: |
           docker build --build-arg REACT_APP_MOVIE_API_URL="a9039c49599db41549dc1dbd1cb9c9f9-742795800.us-east-1.elb.amazonaws.com" -t frontend .
-          docker push 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::7}
+          docker tag docker.io/library/frontend 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::6}
+          docker push 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::6}
 
       - run: aws eks --region us-east-1 update-kubeconfig --name cluster
       - env:
@@ -62,5 +63,5 @@ jobs:
         run: |
           cd k8s
           aws eks --region us-east-1 update-kubeconfig --name cluster
-          kustomize edit set image 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::7}
+          kustomize edit set image 099629925974.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:${GITHUB_SHA::6}
           kustomize build . | kubectl apply -f - --validate=false
